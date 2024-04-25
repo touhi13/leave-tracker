@@ -1,0 +1,37 @@
+<?php
+
+use App\Http\Controllers\AuthController;
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
+|
+ */
+
+Route::prefix('v1')->group(function () {
+
+
+    dd("hh");
+    $adminRole = User::ADMIN_ROLES;
+    $allRole   = User::ALL_ROLES;
+
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('logout', [AuthController::class, 'logout']);
+
+    Route::group(['middleware' => ['token.verify', 'role.verify:' . implode(',', $allRole)]], function () {
+        //
+    });
+
+    Route::group(['prefix' => 'monitoring-options', 'middleware' => ['token.verify', 'role.verify:' . implode(',', $adminRole)]], function () {
+        //
+    });
+
+});
