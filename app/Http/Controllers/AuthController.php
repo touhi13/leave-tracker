@@ -40,7 +40,7 @@ class AuthController extends Controller
             'user'  => $user,
         ];
 
-        return $this->ResponseSuccess(['data' => $data], 'Login Successful', "Login Successful", 200);
+        return $this->ResponseSuccess($data, 'Login Successful', "Login Successful", 200);
     }
 
     public function logout(): JsonResponse
@@ -58,13 +58,10 @@ class AuthController extends Controller
         $user = $this->repository->register($request);
 
         if (!$user) {
-            return $this->ResponseError('Registration Failed', null, 'Registration Failed', 400);
+            return $this->ResponseError('Registration Failed', 'Registration Failed', 400);
         }
 
-        $data = [
-            'user' => $user,
-        ];
-
-        return $this->ResponseSuccess($data, 'Registration Successful', 200);
+        return $this->ResponseSuccess($user, 'Registration Successful', 200);
     }
+
 }

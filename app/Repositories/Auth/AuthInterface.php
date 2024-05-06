@@ -11,4 +11,3 @@ interface AuthInterface
     public function getUserByEmail(string $email): ?User;
     public function getUser(int $id): ?User;
 }
-
